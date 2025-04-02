@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps Learning Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0ea5e9;
+            --secondary-color: #111827;
+            --accent-color: #10b981;
+            --light-color: #f1f5f9;
+            --dark-color: #1e293b;
+            --gradient: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%);
+            --card-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 7%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .logo i {
+            color: var(--accent-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2.5rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 5px;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            background-color: var(--primary-color);
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 7%;
+            background: var(--gradient);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h100v100H0z" fill="none"/><path d="M10 10l20 20M30 10l20 20M50 10l20 20M70 10l20 20M10 30l20 20M30 30l20 20M50 30l20 20M70 30l20 20M10 50l20 20M30 50l20 20M50 50l20 20M70 50l20 20M10 70l20 20M30 70l20 20M50 70l20 20M70 70l20 20" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .hero-content {
+            max-width: 600px;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+        }
+        
+        .hero h1 span {
+            color: var(--accent-color);
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+        
+        .hero-image {
+            flex: 1;
+            max-width: 500px;
+            padding-left: 3rem;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid white;
+            margin-left: 1rem;
+        }
+        
+        .features {
+            padding: 8rem 7%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+            font-weight: 800;
+            text-align: center;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem auto;
+            color: #64748b;
+            font-size: 1.2rem;
+        }
+        
+        .features-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-box {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .feature-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+        }
+        
+        .feature-icon {
+            background-color: var(--light-color);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-icon i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+        
+        .feature-box h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .learning-path {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 8rem 7%;
+        }
+        
+        .learning-path-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 4rem auto 0;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--primary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 10px;
+        }
+        
+        .timeline-item {
+            padding: 10px 50px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+            margin-bottom: 3rem;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -12px;
+            top: 15px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            z-index: 1;
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.3);
+        }
+        
+        .timeline-item:nth-child(even)::after {
+            left: -13px;
+        }
+        
+        .timeline-content {
+            padding: 1.5rem;
+            background: white;
+            color: var(--dark-color);
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .timeline-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .about {
+            padding: 8rem 7%;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4rem;
+        }
+        
+        .about-img {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        
+        .about-img img {
+            max-width: 100%;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s;
+        }
+        
+        .about-img img:hover {
+            transform: rotate(2deg) scale(1.02);
+        }
+        
+        .about-content {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-content h2 {
+            text-align: left;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tech-stack {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .tech-badge {
+            background-color: #f1f5f9;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .courses {
+            padding: 8rem 7%;
+            background-color: var(--light-color);
+        }
+        
+        .courses-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .course-card {
+            background-color: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .course-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .course-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .course-card:hover .course-img img {
+            transform: scale(1.1);
+        }
+        
+        .course-content {
+            padding: 1.5rem;
+        }
+        
+        .course-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .course-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+            color: #64748b;
+        }
+        
+        .contact {
+            padding: 8rem 7%;
+            background: var(--gradient);
+            color: white;
+            position: relative;
+        }
+        
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h20v20H0z" fill="none"/><path d="M10 10l5 5M10 10l-5 5M10 10l5-5M10 10l-5-5" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .contact-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .contact-title {
+            text-align: center;
+            color: white;
+        }
+        
+        .contact-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .contact-form {
+            max-width: 700px;
+            margin: 3rem auto 0;
+            background-color: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 7%;
+            text-align: center;
+        }
+        
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            transition: transform 0.3s, color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: var(--accent-color);
+            transform: translateY(-5px);
+        }
+        
+        @media screen and (max-width: 1024px) {
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-content {
+                margin-bottom: 3rem;
+            }
+            
+            .hero-image {
+                padding-left: 0;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-item::after {
+                left: 18px;
+                top: 15px;
+            }
+            
+            .timeline-item:nth-child(even)::after {
+                left: 18px;
+            }
+        }
+        
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .btn {
+                display: block;
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+            
+            .btn-outline {
+                margin-left: 0;
+            }
+            
+            .about {
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo"><i class="fas fa-code-branch"></i> DevOps Academy</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#learning-path">Learning Path</a></li>
+                <li><a href="#courses">Courses</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Master <span>DevOps</span> Skills for the Modern Tech World</h1>
+                <p>Learn continuous integration, deployment automation, container orchestration, and infrastructure as code from industry experts.</p>
+                <div>
+                    <a href="#courses" class="btn">Start Learning</a>
+                    <a href="#learning-path" class="btn btn-outline">View Roadmap</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://via.placeholder.com/500x400?text=DevOps+Learning" alt="DevOps Learning">
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <h2 class="section-title">Why Choose Our DevOps Program</h2>
+        <p class="section-subtitle">Gain the skills needed to implement modern DevOps practices and accelerate your career.</p>
+        <div class="features-container">
+            <div class="feature-box">
+                <div class="feature-icon">
+                    <i class="fas fa-sync-alt"></i>
+                </div>
+                <h3>CI/CD Pipelines</h3>
+                <p>Learn to build and maintain continuous integration and delivery pipelines using Jenkins, GitHub Actions, and GitLab CI.</p>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon">
+                    <i class="fas fa-cubes"></i>
+                </div>
+                <h3>Container Orchestration</h3>
+                <p>Master Docker and Kubernetes to efficiently deploy, scale, and manage containerized applications.</p>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon">
+                    <i class="fas fa-file-code"></i>
+                </div>
+                <h3>Infrastructure as Code</h3>
+                <p>Implement Terraform, Ansible, and CloudFormation to automate infrastructure provisioning and management.</p>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Monitoring & Observability</h3>
+                <p>Set up comprehensive monitoring and logging systems with Prometheus, Grafana, and ELK stack.</p>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>DevSecOps</h3>
+                <p>Integrate security practices into your DevOps workflows for more secure application delivery.</p>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon">
+                    <i class="fas fa-cloud"></i>
+                </div>
+                <h3>Cloud Native</h3>
+                <p>Build and deploy cloud-native applications on AWS, Azure, and Google Cloud Platform.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="learning-path" class="learning-path">
+        <div class="learning-path-container">
+            <h2 class="section-title" style="color: white;">DevOps Learning Path</h2>
+            <p class="section-subtitle" style="color: rgba(255,255,255,0.8);">Follow our structured roadmap to become a DevOps professional</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Phase 1: Fundamentals</h3>
+                        <p>Learn Linux basics, networking concepts, and get comfortable with command line interfaces. Start with basic scripting using Bash and Python.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Phase 2: Version Control</h3>
+                        <p>Master Git and GitHub for source code management. Learn branching strategies, pull requests, and collaborative workflows.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Phase 3: CI/CD</h3>
+                        <p>Implement continuous integration and delivery pipelines using Jenkins, GitHub Actions, and GitLab CI/CD.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Phase 4: Containerization</h3>
+                        <p>Learn Docker for containerizing applications and Kubernetes for orchestrating containers at scale.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Phase 5: Infrastructure as Code</h3>
+                        <p>Automate infrastructure provisioning using Terraform, CloudFormation, and configuration management with Ansible.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Phase 6: Monitoring & Observability</h3>
+                        <p>Implement monitoring, logging, and alerting solutions using Prometheus, Grafana, and ELK stack.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="courses" class="courses">
+        <div class="courses-container">
+            <h2 class="section-title">Our DevOps Courses</h2>
+            <p class="section-subtitle">Practical, hands-on courses designed to build your DevOps expertise</p>
+            
+            <div class="course-grid">
+                <div class="course-card">
+                    <div class="course-img">
+                        <img src="https://via.placeholder.com/300x200?text=CI/CD+Mastery" alt="CI/CD Course">
+                    </div>
+                    <div class="course-content">
+                        <h3>CI/CD Pipeline Mastery</h3>
+                        <p>Build robust delivery pipelines that automate testing and deployment processes.</p>
+                        <div class="course-info">
+                            <span><i class="far fa-clock"></i> 8 weeks</span>
+                            <span><i class="fas fa-signal"></i> Intermediate</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-img">
+                        <img src="https://via.placeholder.com/300x200?text=Kubernetes" alt="Kubernetes Course">
+                    </div>
+                    <div class="course-content">
+                        <h3>Kubernetes in Production</h3>
+                        <p>Deploy, manage and scale containerized applications with Kubernetes.</p>
+                        <div class="course-info">
+                            <span><i class="far fa-clock"></i> 10 weeks</span>
+                            <span><i class="fas fa-signal"></i> Advanced</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-img">
+                        <img src="https://via.placeholder.com/300x200?text=Terraform" alt="Terraform Course">
+                    </div>
+                    <div class="course-content">
+                        <h3>Infrastructure as Code with Terraform</h3>
+                        <p>Automate your infrastructure provisioning across multiple cloud providers.</p>
+                        <div class="course-info">
+                            <span><i class="far fa-clock"></i> 6 weeks</span>
+                            <span><i class="fas fa-signal"></i> Intermediate</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="about-img">
+            <img src="https://via.placeholder.com/500x400?text=Our+Approach" alt="About DevOps Academy">
+        </div>
+        <div class="about-content">
+            <h2 class="section-title">Our Learning Approach</h2>
+            <p>We believe in practical, hands-on learning that prepares you for real-world DevOps challenges. Our courses are designed by industry experts with years of experience implementing DevOps practices at scale.</p>
+            <p>Through guided projects, real-world scenarios, and comprehensive labs, you'll gain the confidence to implement DevOps practices in your organization.</p>
+            
+            <h3 style="margin-top: 2rem;">Technologies You'll Master</h3>
+            <div class="tech-stack">
+                <span class="tech-badge"><i class="fab fa-git-alt"></i> Git</span>
+                <span class="tech-badge"><i class="fab fa-jenkins"></i> Jenkins</span>
+                <span class="tech-badge"><i class="fab fa-docker"></i> Docker</span>
+                <span class="tech-badge"><i class="fas fa-dharmachakra"></i> Kubernetes</span>
+                <span class="tech-badge"><i class="fab fa-aws"></i> AWS</span>
+                <span class="tech-badge"><i class="fab fa-python"></i> Python</span>
+                <span class="tech-badge"><i class="fas fa-terminal"></i> Terraform</span>
+                <span class="tech-badge"><i class="fas fa-robot"></i> Ansible</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="contact-container">
+            <h2 class="section-title contact-title">Ready to Start Your DevOps Journey?</h2>
+            <p class="section-subtitle contact-subtitle">Contact us to learn more about our programs and how we can help you achieve your goals.</p>
+            
+            <div class="contact-form">
+                <form>
+                    <div class="form-group">
+                        <label class="form-label" for="name">Full Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email Address</label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="interest">I'm interested in</label>
+                        <select class="form-control" id="interest">
+                            <option>CI/CD Pipeline Mastery</option>
+                            <option>Kubernetes in Production</option>
+                            <option>Infrastructure as Code with Terraform</option>
+                            <option>Custom learning path</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="message">Your Message</label>
+                        <textarea class="form-control" id="message" rows="5" placeholder="Tell us about your learning goals"></textarea>
+                    </div>
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-slack"></i></a>
+            </div>
+            
+            <div class="footer-links">
+                <a href="#">Home</a>
+                <a href="#">Courses</a>
+                <a href="#">Resources</a>
+                <a href="#">Blog</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+            
+            <p>&copy; 2023 DevOps Academy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Add scroll effect for header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.1)';
+            } else {
+                header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.05)';
+            }
+        });
+    </script>
+</body>
+</html>
